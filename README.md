@@ -1,6 +1,6 @@
 - 👋 Hi, I’m @shaneturner
 - 👀 I’m interested in web development, practical data science
-- 🌱 I’m currently learning Rust and SvelteKit
+- 🌱 I’m currently learning Machine Learning with Python
 - 💞️ I’m looking to collaborate on acessesibility and diversity
 - 📫 How to reach me ...
 
