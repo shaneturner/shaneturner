@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shane Turner | Portfolio & Cognitive Accessibility Showcase</title>
+  <meta name="description" content="Personal portfolio of Shane Turner, developer, accessibility advocate, and visual education designer. Featuring interactive filter bubble simulations, data visualisation, and neurodiverse reading aids.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="light-theme">
+  <!-- Reading Ruler Overlay for ADHD Line Tracking -->
+  <div id="focus-ruler" class="focus-ruler" aria-hidden="true"></div>
+
+  <!-- Skip Link for Accessibility -->
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- Header & Navigation -->
+  <header class="main-header">
+    <div class="header-container">
+      <a href="#" class="logo" aria-label="Shane Turner Home">
+        <span class="logo-accent">&lt;</span>Shane.T<span class="logo-accent"> /&gt;</span>
+      </a>
+      
+      <nav class="nav-menu" id="nav-menu">
+        <ul class="nav-links">
+          <li><a href="#about" class="nav-item">About</a></li>
+          <li><a href="#simulator" class="nav-item">Filter Bubble Simulator</a></li>
+          <li><a href="#projects" class="nav-item">Projects</a></li>
+          <li><a href="#accessibility" class="nav-item">A11y Statement</a></li>
+          <li><a href="#contact" class="nav-item">Contact</a></li>
+        </ul>
+      </nav>
+
+      <div class="header-controls">
+        <button class="control-btn" id="btn-theme-toggle" title="Toggle Light/Dark Theme" aria-label="Toggle Light/Dark Theme">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+        <button class="control-btn" id="btn-a11y-menu" title="Accessibility Panel" aria-label="Accessibility Panel" aria-expanded="false">
+          <i class="fa-solid fa-universal-access"></i>
+        </button>
+        <button class="mobile-nav-toggle" id="btn-mobile-nav" title="Toggle Menu" aria-controls="nav-menu" aria-expanded="false">
+          <span class="bar"></span>
+          <span class="bar"></span>
+          <span class="bar"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Quick Access A11y Drawer -->
+    <div class="a11y-drawer" id="a11y-drawer" role="region" aria-label="Global Reading Settings">
+      <div class="drawer-container">
+        <div class="drawer-column">
+          <h4>Visual Controls</h4>
+          <div class="control-grid-row">
+            <button class="a11y-toggle" id="btn-high-contrast" aria-pressed="false">
+              <i class="fa-solid fa-circle-half-stroke"></i> High Contrast
+            </button>
+            <button class="a11y-toggle" id="btn-dyslexic" aria-pressed="false">
+              <i class="fa-solid fa-font"></i> Dyslexic Font
+            </button>
+          </div>
+        </div>
+        <div class="drawer-column">
+          <h4>Text Scaling</h4>
+          <div class="scale-stepper">
+            <button id="btn-scale-down" aria-label="Decrease Text Size"><i class="fa-solid fa-minus"></i></button>
+            <span id="text-scale-value" aria-live="polite">100%</span>
+            <button id="btn-scale-up" aria-label="Increase Text Size"><i class="fa-solid fa-plus"></i></button>
+          </div>
+        </div>
+        <div class="drawer-column">
+          <h4>Readability Overlays</h4>
+          <div class="control-grid-row">
+            <button class="a11y-toggle" id="btn-global-ruler" aria-pressed="false">
+              <i class="fa-solid fa-grip-lines"></i> ADHD Ruler
+            </button>
+            <button class="a11y-toggle" id="btn-global-bionic" aria-pressed="false">
+              <i class="fa-solid fa-bold"></i> Bionic Reading
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main id="main-content">
+    
+    <!-- Hero / Intro Section -->
+    <section class="hero-section" id="hero">
+      <div class="section-container hero-grid">
+        <div class="hero-text">
+          <span class="location-badge"><i class="fa-solid fa-location-dot"></i> Based in New Zealand</span>
+          <h1 class="hero-title">Shane Turner</h1>
+          <p class="hero-lead">
+            Web Accessibility, Data Visualisation & Infographics, and Visual Education.
+          </p>
+          <p class="hero-description">
+            I design web experiences focused on **cognitive inclusion**, **neurodivergent accessibility**, and presenting complex algorithms visually so they can be understood by everyone.
+          </p>
+          <div class="hero-cta">
+            <a href="#simulator" class="btn btn-primary">Try the Simulator</a>
+            <a href="#projects" class="btn btn-secondary">Explore Projects</a>
+          </div>
+        </div>
+        
+        <div class="hero-image-panel">
+          <div class="avatar-card">
+            <img src="che2-512.jpg" alt="Portrait of Shane Turner" class="avatar-img" onerror="this.src='che2-256.jpg'; this.onerror=function(){ this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80'; }">
+            <div class="avatar-meta">
+              <h3>Shane Turner</h3>
+              <p>Web Dev & A11y Advocate</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Algorithmic Filter Bubble Simulator Section -->
+    <section class="simulator-section" id="simulator">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="label">Educational Interactive</span>
+          <h2>Algorithmic Bias & Filter Bubbles</h2>
+          <p class="section-subtitle">
+            Personalization algorithms shape what we read online. Engage with this simulated feed to explore how echo chambers lock in, and test neurodivergent reading tools on the side-by-side explanation.
+          </p>
+        </div>
+
+        <!-- Simulator Grid -->
+        <div class="sim-grid">
+          
+          <!-- Column 1: Social Media Feed Scroll Stream -->
+          <div class="sim-column feed-card">
+            <div class="sim-card-header">
+              <h3><i class="fa-solid fa-bars-staggered"></i> Simulated Social Feed</h3>
+              <span class="feed-counter" id="feed-items-count">0 items loaded</span>
+            </div>
+            <div class="feed-container-scroll" id="feed-stream" role="log" aria-live="polite" aria-label="Dynamic Social Media Feed">
+              <!-- Mock Feed Cards will be loaded dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- Column 2: Live Analytics & Weights Panel -->
+          <div class="sim-column dashboard-card">
+            <div class="sim-card-header">
+              <h3><i class="fa-solid fa-chart-pie"></i> Feed Analytics</h3>
+            </div>
+            <div class="dashboard-body">
+              
+              <!-- Bias Gauge Indicator -->
+              <div class="bias-indicator-container">
+                <span class="bias-label left-label">Nature Preservation</span>
+                <div class="bias-track">
+                  <div class="bias-fill" id="bias-gauge-fill" style="left: 50%;"></div>
+                  <div class="bias-center-line"></div>
+                </div>
+                <span class="bias-label right-label">Smart Cities</span>
+              </div>
+              <div class="bias-status-text" id="bias-status-desc">
+                Feed state: **Perfectly Balanced (50% Split)**
+              </div>
+
+              <!-- Simulator Controls -->
+              <div class="sim-controls-group">
+                <div class="slider-control">
+                  <div class="slider-header">
+                    <label for="personalization-slider">Algorithmic Personalization:</label>
+                    <span id="personalization-value">70%</span>
+                  </div>
+                  <input type="range" id="personalization-slider" min="0" max="100" value="70" class="sim-slider">
+                  <p class="slider-help">
+                    At **0%**, you get a balanced feed. At **100%**, the feed recommends only topics matching your historical engagement weight.
+                  </p>
+                </div>
+
+                <!-- Simulation Weight Table -->
+                <div class="weight-legend">
+                  <h4>Algorithmic Engagement Weights</h4>
+                  <div class="legend-row">
+                    <span class="tag tag-read"><i class="fa-solid fa-book-open"></i> Read (Weight: +1)</span>
+                    <span class="tag tag-like"><i class="fa-solid fa-thumbs-up"></i> Like (Weight: +2)</span>
+                    <span class="tag tag-dislike" style="background: rgba(185, 28, 28, 0.08); color: var(--danger);"><i class="fa-solid fa-thumbs-down"></i> Dislike (Weight: -2)</span>
+                    <span class="tag tag-share"><i class="fa-solid fa-retweet"></i> Repost (Weight: +4)</span>
+                  </div>
+                </div>
+
+                <div class="sim-btn-row">
+                  <button class="btn btn-sm btn-accent" id="btn-sim-auto">
+                    <i class="fa-solid fa-play"></i> Auto Engager
+                  </button>
+                  <button class="btn btn-sm btn-danger" id="btn-sim-break" title="Injects counter-topic content to break the loop">
+                    <i class="fa-solid fa-shield-halved"></i> Break the Bubble
+                  </button>
+                  <button class="btn btn-sm btn-secondary" id="btn-sim-reset">
+                    <i class="fa-solid fa-rotate-right"></i> Reset Feed
+                  </button>
+                </div>
+              </div>
+
+              <!-- Real-time Logs -->
+              <div class="sim-stats-deck">
+                <div class="sim-stat-item">
+                  <span class="stat-lbl">Reads</span>
+                  <span class="stat-num" id="stat-reads">0</span>
+                </div>
+                <div class="sim-stat-item">
+                  <span class="stat-lbl">Likes</span>
+                  <span class="stat-num" id="stat-likes">0</span>
+                </div>
+                <div class="sim-stat-item">
+                  <span class="stat-lbl">Dislikes</span>
+                  <span class="stat-num" id="stat-dislikes">0</span>
+                </div>
+                <div class="sim-stat-item">
+                  <span class="stat-lbl">Reposts</span>
+                  <span class="stat-num" id="stat-reposts">0</span>
+                </div>
+                <div class="sim-stat-item">
+                  <span class="stat-lbl">Bubble Status</span>
+                  <span class="stat-num text-success" id="stat-lockin">Open</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Integrated Educational & Accessibility Text Panel -->
+        <div class="explanation-box">
+          <div class="explanation-header">
+            <h4><i class="fa-solid fa-circle-info"></i> How Echo Chambers Work (Educational Context)</h4>
+            
+            <!-- Context Accessibility Controls Toolbar -->
+            <div class="text-a11y-toolbar" role="group" aria-label="Reader Accessibility Options">
+              <button class="text-a11y-btn" id="btn-read-bionic" aria-pressed="false" title="Bolds word prefixes to aid attention">
+                <i class="fa-solid fa-bold"></i> Bionic Reading
+              </button>
+              <button class="text-a11y-btn" id="btn-read-ruler" aria-pressed="false" title="Shows a guide ruler following the cursor">
+                <i class="fa-solid fa-grip-lines"></i> Reading Ruler
+              </button>
+              <button class="text-a11y-btn" id="btn-read-tldr" aria-pressed="false" title="Simplifies layout to short bullet summaries">
+                <i class="fa-solid fa-compress"></i> Simplify Text (TL;DR)
+              </button>
+            </div>
+          </div>
+
+          <!-- Paragraph Text Blocks -->
+          <div class="explanation-content" id="explanation-text-block">
+            <!-- Content will be managed by JS to swap normal / simplified modes -->
+            <div class="paragraph-wrap active" id="text-standard-view">
+              <p class="explain-p">
+                Personalization algorithms run on a fundamental feedback loop: the system monitors your behavior—tracking which cards you read, like, or share—and builds a mathematical preference vector. In this simulation, each card represents a topic. Reading an article teaches the algorithm to favor that topic slightly, but sharing it signals highly intense interest, updating your profile weight four times faster.
+              </p>
+              <p class="explain-p">
+                When the personalization strength is high, the feed filter begins prioritising content that matches your highest weights. As you engage with these recommended posts, your preferences bias further, causing the algorithm to supply even more homogenous content. This is a positive feedback loop: it rapidly constructs a filter bubble, isolating the reader from alternative view points.
+              </p>
+              <p class="explain-p">
+                Breaking a filter bubble requires structural updates, such as reducing the algorithmic personalization slider or manually clicking "Break the Bubble," which forces the network to inject balanced viewpoints and counter-narratives into the recommendation stream. This demonstrates the critical role web developers have in designing educational and inclusive interfaces.
+              </p>
+            </div>
+            
+            <div class="paragraph-wrap" id="text-simplified-view" style="display: none;">
+              <ul class="explain-ul">
+                <li><strong>Feedback Loop:</strong> Social media algorithms monitor your clicks. Reading has a weight of 1, liking has a weight of 2, and sharing has a weight of 4.</li>
+                <li><strong>Echo Chambers:</strong> When personalization is set high, the feed only shows topics you have engaged with in the past. This traps you in an echo chamber of your own views.</li>
+                <li><strong>Breaking Out:</strong> You can break out of a filter bubble by lowering the algorithmic personalization slider, or manually injecting balanced, counter-topic viewpoints.</li>
+                <li><strong>Design Role:</strong> Developers must create balanced, educational, and accessible interfaces that help users understand and control these automated feeds.</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Curated Project Portfolio -->
+    <section class="projects-section" id="projects">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="label">My Projects</span>
+          <h2>Curated Showcase</h2>
+          <p class="section-subtitle">A collection of creations focusing on data visualisation, infographics, and web accessibility tools.</p>
+        </div>
+
+        <div class="projects-grid">
+          
+          <!-- Project Card 1 -->
+          <article class="project-card">
+            <div class="project-badge">Data Vis</div>
+            <div class="project-card-body">
+              <h3>Civic Data Explorer</h3>
+              <p>
+                An interactive public-benefit visualization dashboard designed to aggregate and present municipal spending, public service statistics, and regional climates. Focuses entirely on neutral, non-partisan, and accessible data representation.
+              </p>
+              <div class="tech-row">
+                <span>Python</span>
+                <span>JavaScript</span>
+                <span>Chart.js</span>
+                <span>HTML5 Canvas</span>
+              </div>
+              <a href="#" class="project-link" aria-label="Explore Civic Data Explorer Repository">
+                Explore Repository <i class="fa-solid fa-arrow-right-long"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- Project Card 2 -->
+          <article class="project-card">
+            <div class="project-badge">Accessibility</div>
+            <div class="project-card-body">
+              <h3>Inclusive Reading Extension</h3>
+              <p>
+                A browser helper designed for readers with neurodivergence (ADHD, dyslexia) or cognitive visual fatigue. Dynamically injects line-tracking overlays, converts custom layout text to bionic formats, and filters visual page clutter.
+              </p>
+              <div class="tech-row">
+                <span>JavaScript</span>
+                <span>CSS</span>
+                <span>Browser APIs</span>
+              </div>
+              <a href="#" class="project-link" aria-label="Explore Inclusive Reading Extension Repository">
+                Explore Repository <i class="fa-solid fa-arrow-right-long"></i>
+              </a>
+            </div>
+          </article>
+
+          <!-- Project Card 3 -->
+          <article class="project-card">
+            <div class="project-badge">CLI Tool</div>
+            <div class="project-card-body">
+              <h3>InclusiDev Lint</h3>
+              <p>
+                An automated accessibility audit linter that integrates into continuous deployment pipelines. Scans HTML structures, templates, and styles against WCAG 2.1 AAA contrast and navigation standards, alerting developers to issues early.
+              </p>
+              <div class="tech-row">
+                <span>Node.js</span>
+                <span>CLI</span>
+                <span>Accessibility Tree APIs</span>
+              </div>
+              <a href="#" class="project-link" aria-label="Explore InclusiDev Lint Repository">
+                Explore Repository <i class="fa-solid fa-arrow-right-long"></i>
+              </a>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Cognitive Accessibility & Neurodiversity Statement -->
+    <section class="accessibility-statement" id="accessibility">
+      <div class="section-container statement-grid">
+        <div class="statement-header-panel">
+          <span class="label">A11y Statement</span>
+          <h2>Designed for Neurodiversity</h2>
+          <p>
+            Digital accessibility goes beyond screen-readers and color blind palettes. It includes **cognitive design** and learning styles.
+          </p>
+        </div>
+        
+        <div class="statement-body-panel">
+          <p>
+            This website has been built from the ground up to minimize visual noise and cognitive overload, providing a welcoming environment for users with neurodivergent traits such as ADHD, dyslexia, and autism:
+          </p>
+          <ul class="statement-list">
+            <li>
+              <strong>Generous Whitespace:</strong> Wide structural margins help focus attention, reducing distractibility and cognitive clutter.
+            </li>
+            <li>
+              <strong>Calm Contrast & Glare Reduction:</strong> The default warm cream palette meets WCAG AAA guidelines while avoiding the sharp blue-light glare of stark white backdrops.
+            </li>
+            <li>
+              <strong>Keyboard-First Navigation:</strong> Interactive elements have distinct outline states, allowing keyboard-only users to navigate naturally.
+            </li>
+            <li>
+              <strong>Cognitive Controls:</strong> Built-in aids like Bionic Reading, lines focus guides, and bullet summaries let readers adapt the interface to their personal learning habits.
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+      <div class="section-container">
+        <div class="section-header">
+          <span class="label">Get in Touch</span>
+          <h2>Let's Collaborate</h2>
+          <p class="section-subtitle">Interested in data visualisation and infographics, web accessibility, or visual education? Drop a message!</p>
+        </div>
+
+        <div class="contact-card">
+          <form class="accessible-form" id="contact-form" action="#" method="POST">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="form-name">Name <span class="req" aria-hidden="true">*</span></label>
+                <input type="text" id="form-name" required placeholder="Your Name" aria-required="true">
+              </div>
+              <div class="form-group">
+                <label for="form-email">Email <span class="req" aria-hidden="true">*</span></label>
+                <input type="email" id="form-email" required placeholder="your.email@example.com" aria-required="true">
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label for="form-subject">Subject</label>
+              <input type="text" id="form-subject" placeholder="Collaborative Project Idea">
+            </div>
+
+            <div class="form-group">
+              <label for="form-message">Message <span class="req" aria-hidden="true">*</span></label>
+              <textarea id="form-message" rows="5" required placeholder="Tell me about your ideas..." aria-required="true"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-submit">
+              <span class="btn-text">Send Message</span>
+              <i class="fa-solid fa-paper-plane"></i>
+            </button>
+            
+            <div class="form-status" id="form-status" role="alert" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="main-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Shane Turner. Personal GitHub Pages Portfolio. Built for Everyone.</p>
+      <div class="footer-meta">
+        <a href="#a11y-drawer" class="footer-a11y-toggle">Accessibility Controls</a>
+        <span>&middot;</span>
+        <a href="https://github.com/shaneturner/shaneturner" target="_blank" rel="noopener">GitHub Profile Repository</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Simulation & Controller Scripts -->
+  <script src="visualizer.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
