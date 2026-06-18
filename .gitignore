@@ -1,0 +1,12 @@
+# AI Coding Assistant Files & Customization Directories
+.agents/
+AGENTS.md
+CLAUDE.md
+.claudesettings
+.cursorrules
+.copilot/
+.gemini/
+
+# Logs and system configuration files
+*.log
+.DS_Store
