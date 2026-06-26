@@ -11,9 +11,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
   
-  <!-- FontAwesome for Icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <!-- Custom CSS -->
   <link rel="stylesheet" href="style.css">
 </head>
@@ -43,10 +40,10 @@
 
       <div class="header-controls">
         <button class="control-btn" id="btn-theme-toggle" title="Toggle Light/Dark Theme" aria-label="Toggle Light/Dark Theme">
-          <i class="fa-solid fa-moon"></i>
+          <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#moon"></use></svg>
         </button>
         <button class="control-btn" id="btn-a11y-menu" title="Accessibility Panel" aria-label="Accessibility Panel" aria-expanded="false">
-          <i class="fa-solid fa-universal-access"></i>
+          <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#accessibility"></use></svg>
         </button>
         <button class="mobile-nav-toggle" id="btn-mobile-nav" title="Toggle Menu" aria-controls="nav-menu" aria-expanded="false">
           <span class="bar"></span>
@@ -63,29 +60,29 @@
           <h4>Visual Controls</h4>
           <div class="control-grid-row">
             <button class="a11y-toggle" id="btn-high-contrast" aria-pressed="false">
-              <i class="fa-solid fa-circle-half-stroke"></i> High Contrast
+              <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#contrast"></use></svg> High Contrast
             </button>
             <button class="a11y-toggle" id="btn-dyslexic" aria-pressed="false">
-              <i class="fa-solid fa-font"></i> Dyslexic Font
+              <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#type"></use></svg> Dyslexic Font
             </button>
           </div>
         </div>
         <div class="drawer-column">
           <h4>Text Scaling</h4>
           <div class="scale-stepper">
-            <button id="btn-scale-down" aria-label="Decrease Text Size"><i class="fa-solid fa-minus"></i></button>
+            <button id="btn-scale-down" aria-label="Decrease Text Size"><svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#minus"></use></svg></button>
             <span id="text-scale-value" aria-live="polite">100%</span>
-            <button id="btn-scale-up" aria-label="Increase Text Size"><i class="fa-solid fa-plus"></i></button>
+            <button id="btn-scale-up" aria-label="Increase Text Size"><svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#plus"></use></svg></button>
           </div>
         </div>
         <div class="drawer-column">
           <h4>Readability Overlays</h4>
           <div class="control-grid-row">
             <button class="a11y-toggle" id="btn-global-ruler" aria-pressed="false">
-              <i class="fa-solid fa-grip-lines"></i> ADHD Ruler
+              <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#ruler"></use></svg> ADHD Ruler
             </button>
             <button class="a11y-toggle" id="btn-global-bionic" aria-pressed="false">
-              <i class="fa-solid fa-bold"></i> Bionic Reading
+              <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#bold"></use></svg> Bionic Reading
             </button>
           </div>
         </div>
@@ -100,13 +97,13 @@
     <section class="hero-section" id="hero">
       <div class="section-container hero-grid">
         <div class="hero-text">
-          <span class="location-badge"><i class="fa-solid fa-location-dot"></i> Based in New Zealand</span>
+          <span class="location-badge"><svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#map-pin"></use></svg> Based in New Zealand</span>
           <h1 class="hero-title">Shane Turner</h1>
           <p class="hero-lead">
             Web Accessibility, Data Visualisation & Infographics, and Visual Education.
           </p>
           <p class="hero-description">
-            I design web experiences focused on **cognitive inclusion**, **neurodivergent accessibility**, and presenting complex algorithms visually so they can be understood by everyone.
+            I design web experiences focused on <strong>cognitive inclusion</strong>, <strong>neurodivergent accessibility</strong>, and presenting complex algorithms visually so they can be understood by everyone.
           </p>
           <div class="hero-cta">
             <a href="#simulator" class="btn btn-primary">Try the Simulator</a>
@@ -116,7 +113,7 @@
         
         <div class="hero-image-panel">
           <div class="avatar-card">
-            <img src="che2-512.jpg" alt="Portrait of Shane Turner" class="avatar-img" onerror="this.src='che2-256.jpg'; this.onerror=function(){ this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80'; }">
+            <img src="images/che2-512.jpg" alt="Portrait of Shane Turner" class="avatar-img" onerror="this.src='images/che2-256.jpg'; this.onerror=function(){ this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&auto=format&fit=crop&q=80'; }">
             <div class="avatar-meta">
               <h3>Shane Turner</h3>
               <p>Web Dev & A11y Advocate</p>
@@ -143,7 +140,7 @@
           <!-- Column 1: Social Media Feed Scroll Stream -->
           <div class="sim-column feed-card">
             <div class="sim-card-header">
-              <h3><i class="fa-solid fa-bars-staggered"></i> Simulated Social Feed</h3>
+              <h3><svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#layout-list"></use></svg> Simulated Social Feed</h3>
               <span class="feed-counter" id="feed-items-count">0 items loaded</span>
             </div>
             <div class="feed-container-scroll" id="feed-stream" role="log" aria-live="polite" aria-label="Dynamic Social Media Feed">
@@ -154,7 +151,7 @@
           <!-- Column 2: Live Analytics & Weights Panel -->
           <div class="sim-column dashboard-card">
             <div class="sim-card-header">
-              <h3><i class="fa-solid fa-chart-pie"></i> Feed Analytics</h3>
+              <h3><svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#chart-pie"></use></svg> Feed Analytics</h3>
             </div>
             <div class="dashboard-body">
               
@@ -168,7 +165,7 @@
                 <span class="bias-label right-label">Smart Cities</span>
               </div>
               <div class="bias-status-text" id="bias-status-desc">
-                Feed state: **Perfectly Balanced (50% Split)**
+                Feed state: <strong>Perfectly Balanced (50% Split)</strong>
               </div>
 
               <!-- Simulator Controls -->
@@ -180,7 +177,7 @@
                   </div>
                   <input type="range" id="personalization-slider" min="0" max="100" value="70" class="sim-slider">
                   <p class="slider-help">
-                    At **0%**, you get a balanced feed. At **100%**, the feed recommends only topics matching your historical engagement weight.
+                    At <strong>0%</strong>, you get a balanced feed. At <strong>100%</strong>, the feed recommends only topics matching your historical engagement weight.
                   </p>
                 </div>
 
@@ -188,22 +185,22 @@
                 <div class="weight-legend">
                   <h4>Algorithmic Engagement Weights</h4>
                   <div class="legend-row">
-                    <span class="tag tag-read"><i class="fa-solid fa-book-open"></i> Read (Weight: +1)</span>
-                    <span class="tag tag-like"><i class="fa-solid fa-thumbs-up"></i> Like (Weight: +2)</span>
-                    <span class="tag tag-dislike" style="background: rgba(185, 28, 28, 0.08); color: var(--danger);"><i class="fa-solid fa-thumbs-down"></i> Dislike (Weight: -2)</span>
-                    <span class="tag tag-share"><i class="fa-solid fa-retweet"></i> Repost (Weight: +4)</span>
+                    <span class="tag tag-read"><svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#book-open"></use></svg> Read (Weight: +1)</span>
+                    <span class="tag tag-like"><svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#thumbs-up"></use></svg> Like (Weight: +2)</span>
+                    <span class="tag tag-dislike" style="background: rgba(185, 28, 28, 0.08); color: var(--danger);"><svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#thumbs-down"></use></svg> Dislike (Weight: -2)</span>
+                    <span class="tag tag-share"><svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#repeat-2"></use></svg> Repost (Weight: +4)</span>
                   </div>
                 </div>
 
                 <div class="sim-btn-row">
                   <button class="btn btn-sm btn-accent" id="btn-sim-auto">
-                    <i class="fa-solid fa-play"></i> Auto Engager
+                    <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#play"></use></svg> Auto Engager
                   </button>
                   <button class="btn btn-sm btn-danger" id="btn-sim-break" title="Injects counter-topic content to break the loop">
-                    <i class="fa-solid fa-shield-halved"></i> Break the Bubble
+                    <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#shield-half"></use></svg> Break the Bubble
                   </button>
                   <button class="btn btn-sm btn-secondary" id="btn-sim-reset">
-                    <i class="fa-solid fa-rotate-right"></i> Reset Feed
+                    <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#rotate-cw"></use></svg> Reset Feed
                   </button>
                 </div>
               </div>
@@ -237,21 +234,99 @@
 
         </div>
 
+        <!-- Data Visualisation Panel -->
+        <div class="viz-panel" id="viz-panel" aria-label="Feed bias data visualisation">
+          <div class="viz-panel-header">
+            <div class="viz-header-text">
+              <h4>
+                <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#chart-pie"></use></svg>
+                Bias Analytics
+              </h4>
+              <p class="viz-subtitle">Live data from your simulation — visualised in real time</p>
+            </div>
+            <div class="viz-live-badge" id="viz-live-badge" aria-live="polite">
+              <span class="viz-live-dot"></span> Live
+            </div>
+          </div>
+
+          <!-- Empty state: shown until 5 engagements -->
+          <div class="viz-empty-state" id="viz-empty-state">
+            <svg class="icon" aria-hidden="true"><use href="icons/sprite.svg#chart-pie"></use></svg>
+            <p>Engage with 5 posts to unlock live data visualisations tracking your filter bubble in real time.</p>
+          </div>
+
+          <!-- Charts: shown after 5 engagements -->
+          <div class="viz-content" id="viz-content">
+
+            <!-- 4 metric cards -->
+            <div class="viz-metrics-strip">
+              <div class="viz-metric">
+                <span class="viz-metric-value" id="viz-total">0</span>
+                <span class="viz-metric-label">Total Engagements</span>
+              </div>
+              <div class="viz-metric">
+                <span class="viz-metric-value" id="viz-dominant">—</span>
+                <span class="viz-metric-label">Dominant Topic</span>
+              </div>
+              <div class="viz-metric">
+                <span class="viz-metric-value" id="viz-lockin">—</span>
+                <span class="viz-metric-label">Bubble Formed At</span>
+              </div>
+              <div class="viz-metric">
+                <span class="viz-metric-value" id="viz-bias-pct">50 / 50</span>
+                <span class="viz-metric-label">Nature / Cities %</span>
+              </div>
+            </div>
+
+            <!-- Charts grid: bias drift + side column -->
+            <div class="viz-charts-grid">
+
+              <!-- Hero: bias drift line chart -->
+              <div class="viz-chart-card">
+                <h5>Bias Drift Over Time</h5>
+                <p class="viz-chart-desc">Nature % per engagement — shading shows drift from 50/50 balance</p>
+                <div class="viz-chart-wrap">
+                  <canvas id="chart-drift"></canvas>
+                </div>
+              </div>
+
+              <!-- Side column: doughnut + bar -->
+              <div class="viz-charts-side">
+                <div class="viz-chart-card">
+                  <h5>Topic Split</h5>
+                  <p class="viz-chart-desc">Cumulative engagement weight</p>
+                  <div class="viz-chart-wrap viz-chart-wrap-sm">
+                    <canvas id="chart-split"></canvas>
+                  </div>
+                </div>
+                <div class="viz-chart-card">
+                  <h5>Engagement Types</h5>
+                  <p class="viz-chart-desc">Count by action</p>
+                  <div class="viz-chart-wrap viz-chart-wrap-sm">
+                    <canvas id="chart-engagement"></canvas>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
         <!-- Integrated Educational & Accessibility Text Panel -->
         <div class="explanation-box">
           <div class="explanation-header">
-            <h4><i class="fa-solid fa-circle-info"></i> How Echo Chambers Work (Educational Context)</h4>
+            <h4><svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#info"></use></svg> How Echo Chambers Work (Educational Context)</h4>
             
             <!-- Context Accessibility Controls Toolbar -->
             <div class="text-a11y-toolbar" role="group" aria-label="Reader Accessibility Options">
               <button class="text-a11y-btn" id="btn-read-bionic" aria-pressed="false" title="Bolds word prefixes to aid attention">
-                <i class="fa-solid fa-bold"></i> Bionic Reading
+                <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#bold"></use></svg> Bionic Reading
               </button>
               <button class="text-a11y-btn" id="btn-read-ruler" aria-pressed="false" title="Shows a guide ruler following the cursor">
-                <i class="fa-solid fa-grip-lines"></i> Reading Ruler
+                <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#ruler"></use></svg> Reading Ruler
               </button>
               <button class="text-a11y-btn" id="btn-read-tldr" aria-pressed="false" title="Simplifies layout to short bullet summaries">
-                <i class="fa-solid fa-compress"></i> Simplify Text (TL;DR)
+                <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#minimize-2"></use></svg> Simplify Text (TL;DR)
               </button>
             </div>
           </div>
@@ -311,7 +386,7 @@
                 <span>HTML5 Canvas</span>
               </div>
               <a href="#" class="project-link" aria-label="Explore Civic Data Explorer Repository">
-                Explore Repository <i class="fa-solid fa-arrow-right-long"></i>
+                Explore Repository <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#arrow-right"></use></svg>
               </a>
             </div>
           </article>
@@ -330,7 +405,7 @@
                 <span>Browser APIs</span>
               </div>
               <a href="#" class="project-link" aria-label="Explore Inclusive Reading Extension Repository">
-                Explore Repository <i class="fa-solid fa-arrow-right-long"></i>
+                Explore Repository <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#arrow-right"></use></svg>
               </a>
             </div>
           </article>
@@ -349,7 +424,7 @@
                 <span>Accessibility Tree APIs</span>
               </div>
               <a href="#" class="project-link" aria-label="Explore InclusiDev Lint Repository">
-                Explore Repository <i class="fa-solid fa-arrow-right-long"></i>
+                Explore Repository <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#arrow-right"></use></svg>
               </a>
             </div>
           </article>
@@ -365,7 +440,7 @@
           <span class="label">A11y Statement</span>
           <h2>Designed for Neurodiversity</h2>
           <p>
-            Digital accessibility goes beyond screen-readers and color blind palettes. It includes **cognitive design** and learning styles.
+            Digital accessibility goes beyond screen-readers and color blind palettes. It includes <strong>cognitive design</strong> and learning styles.
           </p>
         </div>
         
@@ -397,43 +472,88 @@
         <div class="section-header">
           <span class="label">Get in Touch</span>
           <h2>Let's Collaborate</h2>
-          <p class="section-subtitle">Interested in data visualisation and infographics, web accessibility, or visual education? Drop a message!</p>
+          <p class="section-subtitle">Interested in data visualisation, web accessibility, or visual education? Reach out directly or connect with me online.</p>
         </div>
 
         <div class="contact-card">
-          <form class="accessible-form" id="contact-form" action="#" method="POST">
-            <div class="form-row">
-              <div class="form-group">
-                <label for="form-name">Name <span class="req" aria-hidden="true">*</span></label>
-                <input type="text" id="form-name" required placeholder="Your Name" aria-required="true">
+          <div class="contact-split">
+            <!-- Left Info Panel -->
+            <div class="contact-info-panel">
+              <h3>Let's build something together</h3>
+              <p class="contact-info-desc">
+                Whether you have an interesting data visualization project, want to talk about cognitive web accessibility, or need a consultant for visual education, I'd love to connect.
+              </p>
+              <div class="contact-email-wrapper">
+                <span class="email-label">Preferred Contact</span>
+                <a href="https://github.com/shaneturner/shaneturner/issues" class="contact-email-link" target="_blank" rel="noopener">Open a GitHub Issue</a>
               </div>
-              <div class="form-group">
-                <label for="form-email">Email <span class="req" aria-hidden="true">*</span></label>
-                <input type="email" id="form-email" required placeholder="your.email@example.com" aria-required="true">
-              </div>
-            </div>
-            
-            <div class="form-group">
-              <label for="form-subject">Subject</label>
-              <input type="text" id="form-subject" placeholder="Collaborative Project Idea">
             </div>
 
-            <div class="form-group">
-              <label for="form-message">Message <span class="req" aria-hidden="true">*</span></label>
-              <textarea id="form-message" rows="5" required placeholder="Tell me about your ideas..." aria-required="true"></textarea>
-            </div>
+            <!-- Right Links Panel -->
+            <div class="contact-links-panel">
+              <!-- Bluesky Card -->
+              <a href="https://bsky.app/profile/shaneturner.dev" class="connect-row" target="_blank" rel="noopener" aria-label="Follow Shane Turner on Bluesky (opens in new tab)">
+                <div class="connect-row-icon">
+                  <svg viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" width="24" height="24">
+                    <path d="M3.468 1.948C5.303 3.325 7.276 6.118 8 7.616c.725-1.498 2.698-4.29 4.532-5.668C13.855.955 16 .186 16 2.632c0 .489-.28 4.105-.444 4.692-.572 2.04-2.653 2.561-4.504 2.246 3.236.551 4.06 2.375 2.281 4.2-3.376 3.464-4.852-.87-5.23-1.98-.07-.204-.103-.3-.103-.218 0-.081-.033.014-.102.218-.379 1.11-1.855 5.444-5.231 1.98-1.778-1.825-.955-3.65 2.28-4.2-1.85.315-3.932-.205-4.503-2.246C.28 6.737 0 3.12 0 2.632 0 .186 2.145.955 3.468 1.948"/>
+                  </svg>
+                </div>
+                <div class="connect-row-content">
+                  <span class="connect-row-title">Bluesky</span>
+                  <span class="connect-row-subtitle">@shaneturner.dev</span>
+                </div>
+                <div class="connect-row-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </div>
+              </a>
 
-            <button type="submit" class="btn btn-primary btn-submit">
-              <span class="btn-text">Send Message</span>
-              <i class="fa-solid fa-paper-plane"></i>
-            </button>
-            
-            <div class="form-status" id="form-status" role="alert" aria-live="polite"></div>
-          </form>
+              <!-- Personal Website Card -->
+              <a href="https://shaneturner.dev" class="connect-row" target="_blank" rel="noopener" aria-label="Visit Shane Turner's Personal Website (opens in new tab)">
+                <div class="connect-row-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="24" height="24">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="2" y1="12" x2="22" y2="12"></line>
+                    <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+                  </svg>
+                </div>
+                <div class="connect-row-content">
+                  <span class="connect-row-title">Personal Blog</span>
+                  <span class="connect-row-subtitle">shaneturner.dev</span>
+                </div>
+                <div class="connect-row-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </div>
+              </a>
+
+              <!-- Business Card -->
+              <a href="https://binarywhale.com" class="connect-row" target="_blank" rel="noopener" aria-label="Visit Binary Whale Website (opens in new tab)">
+                <div class="connect-row-icon">
+                  <svg viewBox="1.5 4.1 32.8 28.1" width="24" height="24">
+                    <use href="icons/sprite.svg#whale"></use>
+                  </svg>
+                </div>
+                <div class="connect-row-content">
+                  <span class="connect-row-title">Binary Whale</span>
+                  <span class="connect-row-subtitle">binarywhale.com</span>
+                </div>
+                <div class="connect-row-arrow">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="20" height="20">
+                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                    <polyline points="7 7 17 7 17 17"></polyline>
+                  </svg>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
 
+    </section>
   </main>
 
   <!-- Footer -->
@@ -448,6 +568,8 @@
     </div>
   </footer>
 
+  <!-- Chart.js for data visualisation panel -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
   <!-- Simulation & Controller Scripts -->
   <script src="visualizer.js"></script>
   <script src="app.js"></script>

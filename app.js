@@ -18,14 +18,15 @@ document.addEventListener('DOMContentLoaded', () => {
     if (body.classList.contains('light-theme')) {
       body.classList.remove('light-theme');
       body.classList.add('dark-theme');
-      btnThemeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+      btnThemeToggle.innerHTML = '<svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#sun"></use></svg>';
       localStorage.setItem('theme-preference', 'dark');
     } else {
       body.classList.remove('dark-theme');
       body.classList.add('light-theme');
-      btnThemeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+      btnThemeToggle.innerHTML = '<svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#moon"></use></svg>';
       localStorage.setItem('theme-preference', 'light');
     }
+    document.dispatchEvent(new CustomEvent('theme-change'));
   });
 
   // Load theme preference
@@ -35,11 +36,11 @@ document.addEventListener('DOMContentLoaded', () => {
   if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
     body.classList.remove('light-theme');
     body.classList.add('dark-theme');
-    btnThemeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+    btnThemeToggle.innerHTML = '<svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#sun"></use></svg>';
   } else {
     body.classList.remove('dark-theme');
     body.classList.add('light-theme');
-    btnThemeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+    btnThemeToggle.innerHTML = '<svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#moon"></use></svg>';
   }
 
 
@@ -334,45 +335,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
   // ----------------------------------------------------
-  // 6. Accessible Contact Form Handling
+  // 6. Connect Grid Links
   // ----------------------------------------------------
-  const contactForm = document.getElementById('contact-form');
-  const formStatus = document.getElementById('form-status');
-
-  if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      
-      const submitBtn = contactForm.querySelector('.btn-submit');
-      const submitText = submitBtn.querySelector('.btn-text');
-      const name = document.getElementById('form-name').value.trim();
-      const email = document.getElementById('form-email').value.trim();
-      const message = document.getElementById('form-message').value.trim();
-
-      if (!name || !email || !message) {
-        formStatus.innerText = "Please complete all mandatory fields (*).";
-        formStatus.className = "form-status error";
-        return;
-      }
-
-      // Enter loading state
-      submitBtn.disabled = true;
-      submitText.innerText = "Sending Message...";
-      formStatus.style.display = "none";
-
-      // Mock network latency of 1.2s
-      setTimeout(() => {
-        submitBtn.disabled = false;
-        submitText.innerText = "Send Message";
-        
-        // Show success status
-        formStatus.innerText = `Thank you, ${name}! Your collaboration query has been received.`;
-        formStatus.className = "form-status success";
-        
-        // Wipe fields
-        contactForm.reset();
-      }, 1200);
-    });
-  }
+  // Form submission handling removed in favor of direct profile links.
 
 });

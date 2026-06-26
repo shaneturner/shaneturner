@@ -31,7 +31,7 @@ I'm passionate about diversity and digital inclusion. Let's collaborate on:
 - Interactive data visualisations and infographics.
 - Open-source diversity initiatives.
 
-📫 **How to reach me**: [shane@example.com](mailto:shane@example.com) or open an issue right here!
+📫 **How to reach me**: [Open a GitHub Issue](https://github.com/shaneturner/shaneturner/issues) or find me on [Bluesky](https://bsky.app/profile/shaneturner.dev)
 
 ---
 
