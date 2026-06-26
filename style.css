@@ -677,29 +677,185 @@ section {
   background: var(--bg-card-alt);
 }
 
+/* Peek container — holds only the faded previous cards */
 .feed-container-scroll {
-  height: 600px;
-  overflow-y: scroll;
-  scrollbar-width: thin;
-  scrollbar-color: var(--primary) var(--bg-card-alt);
-  padding: 24px;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  gap: 18px;
   background-color: var(--bg-card-alt);
 }
 
-.feed-container-scroll::-webkit-scrollbar {
-  width: 8px;
+/* Shared peek slot styles */
+.slot-peek {
+  overflow: hidden;
+  flex-shrink: 0;
+  position: relative;
+  padding: 14px 24px 0;
+  pointer-events: none;
+  user-select: none;
 }
 
-.feed-container-scroll::-webkit-scrollbar-track {
+.slot-peek:empty {
+  height: 0 !important;
+}
+
+.slot-peek::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+  background: linear-gradient(to bottom, transparent, var(--bg-card-alt));
+  pointer-events: none;
+  z-index: 1;
+}
+
+.slot-peek .feed-post {
+  animation: none;
+}
+
+/* Older peek (two posts back) — smaller, more faded */
+.slot-peek-older {
+  height: 52px;
+}
+
+.slot-peek-older::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 28px;
+  background: linear-gradient(to bottom, var(--bg-card-alt), transparent);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.slot-peek-older .feed-post {
+  opacity: 0.22;
+}
+
+/* Recent peek (one post back) — taller, less faded */
+.slot-peek-recent {
+  height: 88px;
+}
+
+.slot-peek-recent .feed-post {
+  opacity: 0.48;
+}
+
+/* Active post — natural height, sits directly in the column */
+.slot-active {
+  padding: 10px 24px 0;
   background: var(--bg-card-alt);
 }
 
-.feed-container-scroll::-webkit-scrollbar-thumb {
-  background-color: var(--primary);
-  border-radius: 4px;
+/* Advance button row */
+.feed-advance-row {
+  padding: 14px 24px;
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.feed-advance-btn {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  color: var(--primary);
+  padding: 10px 32px;
+  border-radius: 24px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: var(--transition-normal);
+}
+
+.feed-advance-btn:hover {
+  background: var(--primary);
+  color: var(--text-inverse);
+  border-color: var(--primary);
+  transform: translateY(1px);
+}
+
+/* --- View Transitions: feed advance animation ---
+   VT names are assigned to the CARD ELEMENTS in JS, not the slots.
+   The browser then tracks each card moving across the DOM and morphs
+   its position, size, and appearance between the two states.
+   JS guards prefers-reduced-motion before setting names or calling startViewTransition. */
+
+@keyframes feed-card-fadeout {
+  to { opacity: 0; }
+}
+
+/* Suppress root-level crossfade so unnamed element removals (the peek-older card)
+   and layout shifts happen instantly — named card elements own their own animations */
+::view-transition-image-pair(root) {
+  animation: none;
+}
+
+/* New card entering active position — slide up from below */
+::view-transition-new(feed-card-new) {
+  animation: 480ms cubic-bezier(0, 0, 0.2, 1) both slide-in-up;
+}
+
+/* Cards moving between positions (active→peek-recent, peek-recent→peek-older).
+   The group handles spatial morphing; old/new pseudo-elements crossfade appearance.
+   mix-blend-mode: normal prevents the UA default plus-lighter from additively
+   summing the two snapshot layers (which causes a brightness spike mid-crossfade).
+   Explicit keyframes are used so the final frame opacity exactly matches the
+   element's resting opacity — the UA default fade-in ends at opacity:1 regardless
+   of the element's actual opacity, causing a snap when pseudo-elements are torn down. */
+::view-transition-group(feed-card-0),
+::view-transition-group(feed-card-1) {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes vt-fade-out-from-active {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+@keyframes vt-fade-in-to-peek-recent {
+  from { opacity: 0; }
+  to   { opacity: 0.48; }
+}
+@keyframes vt-fade-out-from-peek-recent {
+  from { opacity: 0.48; }
+  to   { opacity: 0; }
+}
+@keyframes vt-fade-in-to-peek-older {
+  from { opacity: 0; }
+  to   { opacity: 0.22; }
+}
+
+::view-transition-old(feed-card-0) {
+  mix-blend-mode: normal;
+  animation: 520ms cubic-bezier(0.4, 0, 0.2, 1) both vt-fade-out-from-active;
+}
+::view-transition-new(feed-card-0) {
+  mix-blend-mode: normal;
+  animation: 520ms cubic-bezier(0.4, 0, 0.2, 1) both vt-fade-in-to-peek-recent;
+}
+::view-transition-old(feed-card-1) {
+  mix-blend-mode: normal;
+  animation: 520ms cubic-bezier(0.4, 0, 0.2, 1) both vt-fade-out-from-peek-recent;
+}
+::view-transition-new(feed-card-1) {
+  mix-blend-mode: normal;
+  animation: 520ms cubic-bezier(0.4, 0, 0.2, 1) both vt-fade-in-to-peek-older;
+}
+
+/* Suppress the card's own entry animation when VT is running it instead */
+@supports (view-transition-name: none) {
+  .slot-active .feed-post {
+    animation: none;
+  }
 }
 
 /* Feed Cards */
@@ -711,12 +867,13 @@ section {
   animation: slide-in-up 0.3s ease-out;
   position: relative;
   overflow: hidden;
-  transition: background-color 0.15s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
   flex-shrink: 0;
 }
 
 .feed-post:hover {
-  background-color: rgba(100, 116, 139, 0.04);
+  transform: scale(1.015);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.09);
 }
 
 /* Read scan-line animation */
@@ -1257,6 +1414,28 @@ section {
   display: grid;
   grid-template-columns: 1.2fr 1.2fr 0.8fr;
   gap: 10px;
+}
+
+.autoplay-remaining {
+  font-variant-numeric: tabular-nums;
+  opacity: 0.7;
+  font-size: 0.82em;
+}
+
+.autoplay-progress {
+  height: 3px;
+  background: var(--border-color);
+  border-radius: 2px;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.autoplay-progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  border-radius: 2px;
+  transition: width 0.6s ease;
 }
 
 .sim-stats-deck {

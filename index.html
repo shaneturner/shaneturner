@@ -143,8 +143,17 @@
               <h3><svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#layout-list"></use></svg> Simulated Social Feed</h3>
               <span class="feed-counter" id="feed-items-count">0 items loaded</span>
             </div>
-            <div class="feed-container-scroll" id="feed-stream" role="log" aria-live="polite" aria-label="Dynamic Social Media Feed">
-              <!-- Mock Feed Cards will be loaded dynamically by JS -->
+            <div class="feed-container-scroll" id="feed-stream" aria-hidden="true">
+              <!-- Peek slots injected by JS -->
+            </div>
+            <div class="slot-active" id="slot-active" role="log" aria-live="polite" aria-label="Current post">
+              <!-- Active post injected by JS -->
+            </div>
+            <div class="feed-advance-row">
+              <button class="feed-advance-btn" id="btn-feed-advance" aria-label="Load next post">
+                <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#chevron-down"></use></svg>
+                Next Post
+              </button>
             </div>
           </div>
 
@@ -202,6 +211,9 @@
                   <button class="btn btn-sm btn-secondary" id="btn-sim-reset">
                     <svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#rotate-cw"></use></svg> Reset Feed
                   </button>
+                </div>
+                <div id="autoplay-progress" class="autoplay-progress" hidden aria-hidden="true">
+                  <div class="autoplay-progress-fill"></div>
                 </div>
               </div>
 

@@ -268,9 +268,12 @@ document.addEventListener('DOMContentLoaded', () => {
     window.simulator = new FilterBubbleSimulator();
 
     // Controls
+    const btnFeedAdvance = document.getElementById('btn-feed-advance');
     const btnSimAuto = document.getElementById('btn-sim-auto');
     const btnSimBreak = document.getElementById('btn-sim-break');
     const btnSimReset = document.getElementById('btn-sim-reset');
+
+    btnFeedAdvance.addEventListener('click', () => window.simulator.advance());
 
     btnSimAuto.addEventListener('click', () => {
       window.simulator.toggleAutoplay();

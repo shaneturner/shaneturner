@@ -7,6 +7,7 @@ class FilterBubbleSimulator {
     this.sliderVal = document.getElementById('personalization-value');
     this.bubbleStatusEl = document.getElementById('stat-lockin');
 
+    this.slotActive = document.getElementById('slot-active');
     if (!this.feedStream) return;
 
     this.weights = { read: 1, like: 2, dislike: -2, repost: 4 };
@@ -17,12 +18,14 @@ class FilterBubbleSimulator {
     this.postsState = {};
     this.autoplayTimer = null;
     this.isAutoplay = false;
+    this.autoplayRemaining = 0;
+    this.autoplayDone = false;
     this.biasHistory = [];
     this.engagementCount = 0;
     this.bubbleLockedAt = null;
     this.simTimeOffset = 0;
-    this.scrollObserver = null;
-    this.lastObservedCard = null;
+    this.activePostId = null;
+    this.namedCards = new Set();
     this.charts = { drift: null, split: null, engagement: null };
 
     this.articlesPool = {
@@ -67,7 +70,8 @@ class FilterBubbleSimulator {
 
   reset() {
     this.stopAutoplay();
-    if (this.scrollObserver) this.scrollObserver.disconnect();
+    this.namedCards.forEach(el => { el.style.viewTransitionName = ''; });
+    this.namedCards.clear();
 
     this.userWeights = { nature: 5, cities: 5 };
     this.stats = { reads: 0, likes: 0, dislikes: 0, reposts: 0 };
@@ -77,37 +81,79 @@ class FilterBubbleSimulator {
     this.engagementCount = 0;
     this.bubbleLockedAt = null;
     this.simTimeOffset = 20 + Math.floor(Math.random() * 10);
-    this.feedStream.innerHTML = '';
+    this.activePostId = null;
+
+    this.feedStream.innerHTML = '<div class="slot-peek slot-peek-older" id="slot-peek-2"></div><div class="slot-peek slot-peek-recent" id="slot-peek-1"></div>';
+    this.slotActive.innerHTML = '';
+
+    this.autoplayDone = false;
+    this.autoplayRemaining = 0;
+    this.updateAutoplayBtn();
 
     this.updateStatsDOM();
     this.updateGaugeDOM();
     this.resetVizPanel();
 
-    const initial = ['nature','cities','nature','cities','nature','cities','nature','cities'];
-    initial.forEach(t => this.injectPost(t));
-    this.setupInfiniteScroll();
-    this.updateFeedCounter();
+    this.advance();
   }
 
-  setupInfiniteScroll() {
-    this.scrollObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          this.injectPost(this.recommendNextTopic());
-          this.injectPost(this.recommendNextTopic());
-          this.observeLastCard();
-        }
-      });
-    }, { root: this.feedStream, rootMargin: '0px 0px 80px 0px', threshold: 0.1 });
-    this.observeLastCard();
-  }
+  advance(forceTopic, isIntervention = false) {
+    const slotPeek2 = document.getElementById('slot-peek-2');
+    const slotPeek1 = document.getElementById('slot-peek-1');
+    if (!slotPeek2 || !slotPeek1 || !this.slotActive) return;
 
-  observeLastCard() {
-    if (this.lastObservedCard) this.scrollObserver.unobserve(this.lastObservedCard);
-    const cards = this.feedStream.querySelectorAll('.feed-post');
-    if (cards.length > 0) {
-      this.lastObservedCard = cards[cards.length - 1];
-      this.scrollObserver.observe(this.lastObservedCard);
+    const topic = forceTopic || this.recommendNextTopic();
+    const newCard = this.buildPostCard(topic, isIntervention);
+
+    // Grab existing card nodes — we move them (not clone) so the browser
+    // can track each element's journey across the DOM via view-transition-name.
+    const activeCard = this.slotActive.querySelector('.feed-post');
+    const peek1Card  = slotPeek1.querySelector('.feed-post');
+    const peek2Card  = slotPeek2.querySelector('.feed-post');
+
+    const useVT = !!document.startViewTransition &&
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    if (useVT) {
+      // Clear stale names from previous transition
+      this.namedCards.forEach(el => { el.style.viewTransitionName = ''; });
+      this.namedCards.clear();
+
+      // Name each card: the browser maps the same name before → after the DOM
+      // update and automatically morphs position, size, and appearance.
+      const tag = (el, name) => {
+        if (!el) return;
+        el.style.viewTransitionName = name;
+        this.namedCards.add(el);
+      };
+      // peek2Card is not tagged: its opacity is already 22% so it's barely visible,
+      // and animating it would create a ghost overlapping feed-card-1 arriving at
+      // the same position. Instant removal is less noticeable than the overlap.
+      tag(peek1Card,  'feed-card-1');
+      tag(activeCard, 'feed-card-0');
+      tag(newCard,    'feed-card-new');
+    }
+
+    const doUpdate = () => {
+      if (peek2Card) peek2Card.remove();
+      if (peek1Card) {
+        slotPeek2.appendChild(peek1Card);
+        peek1Card.style.opacity = '0.22';   // peek-older target opacity
+      }
+      if (activeCard) {
+        slotPeek1.appendChild(activeCard);
+        activeCard.style.opacity = '0.48';  // peek-recent target opacity
+      }
+      this.slotActive.appendChild(newCard);
+
+      this.activePostId = this.postIdCounter;
+      this.updateFeedCounter();
+    };
+
+    if (useVT) {
+      document.startViewTransition(doUpdate);
+    } else {
+      doUpdate();
     }
   }
 
@@ -119,7 +165,7 @@ class FilterBubbleSimulator {
     return `${Math.floor(m / 60)}h ago`;
   }
 
-  injectPost(topic, isIntervention = false) {
+  buildPostCard(topic, isIntervention = false) {
     const pool = this.articlesPool[topic];
     const article = pool[Math.floor(Math.random() * pool.length)];
     this.postIdCounter++;
@@ -168,8 +214,7 @@ class FilterBubbleSimulator {
         </div>
       </div>`;
 
-    this.feedStream.appendChild(card);
-    this.updateFeedCounter();
+    return card;
   }
 
   playReadAnimation(card) {
@@ -320,9 +365,10 @@ class FilterBubbleSimulator {
   breakBubble() {
     this.userWeights = { nature: 5, cities: 5 };
     this.updateGaugeDOM();
-    ['nature','cities','nature','cities'].forEach(t => this.injectPost(t, true));
-    setTimeout(() => this.feedStream.scrollTo({ top: this.feedStream.scrollHeight, behavior: 'smooth' }), 100);
-    this.observeLastCard();
+    const activeCard = this.slotActive?.querySelector('.feed-post');
+    const currentTopic = activeCard?.dataset.topic || 'nature';
+    const counterTopic = currentTopic === 'nature' ? 'cities' : 'nature';
+    this.advance(counterTopic, true);
   }
 
   updateStatsDOM() {
@@ -334,9 +380,8 @@ class FilterBubbleSimulator {
   }
 
   updateFeedCounter() {
-    const count = this.feedStream.querySelectorAll('.feed-post').length;
     const el = document.getElementById('feed-items-count');
-    if (el) el.innerText = `${count} cards in stream`;
+    if (el) el.innerText = `Post #${this.postIdCounter}`;
   }
 
   toggleAutoplay() {
@@ -344,32 +389,59 @@ class FilterBubbleSimulator {
   }
 
   startAutoplay() {
-    const btn = document.getElementById('btn-sim-auto');
-    if (!btn) return;
+    if (!document.getElementById('btn-sim-auto')) return;
     this.isAutoplay = true;
-    btn.innerHTML = '<svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#pause"></use></svg> Pause Autoplay';
-    btn.classList.remove('btn-accent');
-    btn.classList.add('btn-secondary');
+    this.autoplayDone = false;
+    this.autoplayRemaining = 50;
+    this.updateAutoplayBtn();
 
     const loop = () => {
       if (!this.isAutoplay) return;
+      if (this.autoplayRemaining <= 0) {
+        this.stopAutoplay(true);
+        return;
+      }
+      this.autoplayRemaining--;
+      this.updateAutoplayBtn();
       this.autoEngageOnce();
-      this.autoplayTimer = setTimeout(loop, 950);
+      this.autoplayTimer = setTimeout(loop, 1800);
     };
     loop();
   }
 
-  autoEngageOnce() {
-    const cards = Array.from(this.feedStream.querySelectorAll('.feed-post'));
-    const unread = cards.filter(c => {
-      const id = parseInt(c.id.replace('post-', ''), 10);
-      return this.postsState[id] && !this.postsState[id].isRead;
-    });
-    // Prefer newest unread; fall back to newest cards
-    const pool = unread.length > 0 ? unread.slice(-3) : cards.slice(-3);
-    if (!pool.length) return;
+  updateAutoplayBtn() {
+    const btn = document.getElementById('btn-sim-auto');
+    const bar = document.getElementById('autoplay-progress');
+    if (!btn) return;
 
-    const card = pool[Math.floor(Math.random() * pool.length)];
+    if (this.isAutoplay) {
+      btn.innerHTML = `<svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#pause"></use></svg> Pause <span class="autoplay-remaining">${this.autoplayRemaining} left</span>`;
+      btn.classList.remove('btn-accent');
+      btn.classList.add('btn-secondary');
+    } else if (this.autoplayDone) {
+      btn.innerHTML = `<svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#play"></use></svg> 50 More`;
+      btn.classList.remove('btn-secondary');
+      btn.classList.add('btn-accent');
+    } else {
+      btn.innerHTML = `<svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#play"></use></svg> Auto Engager`;
+      btn.classList.remove('btn-secondary');
+      btn.classList.add('btn-accent');
+    }
+
+    if (bar) {
+      const visible = this.isAutoplay || this.autoplayDone;
+      bar.hidden = !visible;
+      const pct = this.isAutoplay
+        ? ((50 - this.autoplayRemaining) / 50) * 100
+        : 100;
+      bar.querySelector('.autoplay-progress-fill').style.width = pct + '%';
+    }
+  }
+
+  autoEngageOnce() {
+    const card = this.slotActive?.querySelector('.feed-post');
+    if (!card) return;
+
     const id = parseInt(card.id.replace('post-', ''), 10);
     const topic = card.dataset.topic;
     const state = this.postsState[id];
@@ -385,18 +457,15 @@ class FilterBubbleSimulator {
     } else if (r < 0.90 && !state.isReposted) {
       this.toggleRepost(topic, id, card.querySelector('.btn-repost'));
     }
-    // remaining ~10%: skip (passive scroll simulation)
+
+    setTimeout(() => this.advance(), 500);
   }
 
-  stopAutoplay() {
+  stopAutoplay(completed = false) {
     this.isAutoplay = false;
     if (this.autoplayTimer) { clearTimeout(this.autoplayTimer); this.autoplayTimer = null; }
-    const btn = document.getElementById('btn-sim-auto');
-    if (btn) {
-      btn.innerHTML = '<svg class="icon" aria-hidden="true" width="1em" height="1em"><use href="icons/sprite.svg#play"></use></svg> Auto Engager';
-      btn.classList.remove('btn-secondary');
-      btn.classList.add('btn-accent');
-    }
+    if (completed) this.autoplayDone = true;
+    this.updateAutoplayBtn();
   }
 
   // --- Charts ---
