@@ -8,6 +8,11 @@ CLAUDE.md
 .copilot/
 .gemini/
 
+# Dependencies and build output
+node_modules/
+dist/
+.wrangler/
+
 # Logs and system configuration files
 *.log
 .DS_Store

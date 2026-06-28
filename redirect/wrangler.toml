@@ -1,0 +1,8 @@
+name = "shaneturner-redirect"
+account_id = "3d2a0dfd6b72bc880ba73b6ee8697c80"
+compatibility_date = "2026-06-28"
+main = "worker.js"
+
+[[routes]]
+pattern = "shaneturner.co.nz"
+custom_domain = true
