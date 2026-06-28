@@ -86,6 +86,8 @@ class FilterBubbleSimulator {
     this.feedStream.innerHTML = '<div class="slot-peek slot-peek-older" id="slot-peek-2"></div><div class="slot-peek slot-peek-recent" id="slot-peek-1"></div>';
     this.slotActive.innerHTML = '';
 
+    this.activeTransition = null;
+
     this.autoplayDone = false;
     this.autoplayRemaining = 0;
     this.updateAutoplayBtn();
@@ -151,7 +153,9 @@ class FilterBubbleSimulator {
     };
 
     if (useVT) {
-      document.startViewTransition(doUpdate);
+      if (this.activeTransition) this.activeTransition.skipTransition();
+      this.activeTransition = document.startViewTransition(doUpdate);
+      this.activeTransition.finished.finally(() => { this.activeTransition = null; });
     } else {
       doUpdate();
     }
