@@ -2090,6 +2090,9 @@ section {
 @media (max-width: 768px) {
   section { padding: 80px 0; }
 
+  /* Fix specificity: .hero-section { padding } overrides the tag selector above */
+  .hero-section { padding: 70px 0; }
+
   .hero-title { font-size: calc(2.6rem * var(--font-scale)); }
 
   .mobile-nav-toggle {
@@ -2127,6 +2130,15 @@ section {
   .contact-split { grid-template-columns: 1fr; gap: 36px; }
   .contact-card { padding: 32px 24px; }
 
+  /* Stack bias labels above/below the track — labels are too long for side-by-side on mobile */
+  .bias-indicator-container {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  .bias-track { order: 2; }
+  .left-label  { order: 1; text-align: left; }
+  .right-label { order: 3; text-align: left; }
+
   .sim-btn-row { grid-template-columns: 1fr; }
 
   .sim-stats-deck { grid-template-columns: repeat(2, 1fr); }
@@ -2136,4 +2148,54 @@ section {
   .viz-charts-grid { grid-template-columns: 1fr; }
 
   .project-card-featured .project-card-body { padding: 28px; }
+}
+
+@media (max-width: 480px) {
+  section { padding: 60px 0; }
+  .hero-section { padding: 48px 0; }
+
+  .hero-title { font-size: calc(2.1rem * var(--font-scale)); }
+  .hero-lead { font-size: calc(1.25rem * var(--font-scale)); }
+
+  .hero-cta {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .hero-cta .btn { width: 100%; justify-content: center; }
+
+  .section-header { margin-bottom: 36px; }
+  .section-header h2 { font-size: calc(1.85rem * var(--font-scale)); }
+
+  .about-intro h2 { font-size: calc(1.85rem * var(--font-scale)); }
+
+  .stack-grid { grid-template-columns: 1fr; }
+  .stack-col + .stack-col {
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+  }
+
+  .post-avatar-col { display: none; }
+
+  .dashboard-body { padding: 20px 16px; }
+
+  .sim-stats-deck { grid-template-columns: repeat(3, 1fr); }
+  .sim-stats-deck .sim-stat-item:last-child { grid-column: 1 / -1; }
+
+  .explanation-box { padding: 20px 16px; }
+  .explanation-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .text-a11y-toolbar { flex-wrap: wrap; }
+
+  .viz-metrics-strip { grid-template-columns: repeat(2, 1fr); }
+  .viz-metric-value { font-size: 1.15rem; }
+
+  .contact-card { padding: 20px 16px; }
+
+  .project-card { padding: 24px 20px; }
+  .project-card-featured .project-card-body { padding: 20px; }
+
+  .footer-container { flex-direction: column; align-items: flex-start; }
 }
