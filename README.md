@@ -1,45 +1,35 @@
 # Shane Turner
 
-Developer based in New Zealand, focused on web accessibility, data visualisation and infographics, and visual education.
+Web developer and data visualisation specialist based in New Zealand. I make complex information legible — data and content that matters to people, built into web applications they can actually use.
+
+[shaneturner.github.io/shaneturner](https://shaneturner.github.io/shaneturner/)
 
 ---
 
-## Interactive Portfolio
+## About this repository
 
-An interactive web portal featuring an Algorithmic Filter Bubble Simulator, neurodiversity reading aids, and project showcases.
+This is the source for my personal portfolio site. It is a static site — no build step, no framework — hosted on GitHub Pages.
 
-[Launch Portfolio](https://shaneturner.github.io/shaneturner/)
+The site covers:
 
----
-
-## Tech Stack & Focus Areas
-
-| Web Development | Data Visualisation & Infographics | Web Accessibility & Visual Education |
-| :--- | :--- | :--- |
-| HTML5 / CSS3 / JavaScript (ES6+) | Chart.js & Canvas | WCAG 2.1 Compliance |
-| Responsive Layouts | Python Data Audits | Keyboard-first Navigation |
-| Interactive Animations | Clean UI Dashboards | ARIA Semantics |
-| | Visual Explanations | Screen Reader Auditing |
+- What I do and who I work well with
+- Selected projects, including a live algorithmic bias simulator
+- An accessibility statement, with working implementations of neurodivergent reading aids built into the page itself
 
 ---
 
-## Currently Learning
+## Stack
 
-- Visual Education: Explaining complex algorithms (like feed recommendations) in clear, simple visual models.
-- Advanced Screen Reader Optimization: Fine-tuning client-side aria-live announcements and visual contrast schemes.
+The portfolio itself is built with plain HTML, CSS, and vanilla JavaScript. Fonts are self-hosted (WOFF2, latin subset). No tracking, no external dependencies at runtime.
 
----
+My general working stack across client projects:
 
-## Collaborative Interests
-
-Passionate about diversity and digital inclusion. Open to collaboration on:
-
-- Web Accessibility (A11y) audits and remediation
-- Interactive data visualisations and infographics
-- Open-source diversity initiatives
-
-**How to reach me**: [Open a GitHub Issue](https://github.com/shaneturner/shaneturner/issues) or find me on [Bluesky](https://bsky.app/profile/shaneturner.dev)
+**Languages:** Laravel / PHP, JavaScript, Python, Ruby, Rust  
+**Tools & Frameworks:** Craft CMS, Svelte, Chart.js, Three.js / WebGL, Unity
 
 ---
 
-*This is a special repository. The static portfolio code is housed in this main branch and published to GitHub Pages.*
+## Contact
+
+hey@shaneturner.dev  
+Bluesky: [bsky.app/profile/shaneturner.dev](https://bsky.app/profile/shaneturner.dev)
